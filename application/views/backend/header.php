@@ -13,7 +13,7 @@
                 <?php if($this->session->userdata('login_type') == 'parent') : ?>
                 <a class="logo" href="<?php echo base_url(); ?>index.php?parents/parents_dashboard">
                 <?php endif; ?>
-                <b><img src="<?php echo base_url();?>style/images/logoadmin.png" alt="home" /></b><span class="hidden-xs"><strong>{ LOGO }</strong> SCHOOL</span></a></div>
+                <b><img src="<?php echo base_url();?>style/images/logoadmin.png" alt="home" /></b><span class="hidden-xs"><strong>St. JUDE</strong>SECONDARY</span></a></div>
                 <ul class="nav navbar-top-links navbar-left hidden-xs">
                     <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
                     <?php if($this->session->userdata('login_type') == 'admin') : ?>
