@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$config['base_url'] = 'http://41.215.141.61/pro_sms/';
+$config['base_url'] = 'http://localhost:8000/test/';
 $config['index_page'] = 'index.php';
 $config['uri_protocol']	= 'QUERY_STRING';
 $config['url_suffix'] = '';
@@ -8,7 +8,7 @@ $config['language']	= 'english';
 $config['charset'] = 'UTF-8';
 $config['enable_hooks'] = FALSE;
 $config['subclass_prefix'] = 'MY_';
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 $config['allow_get_array'] = TRUE;
 $config['enable_query_strings'] = FALSE;

@@ -36,6 +36,8 @@
  * @filesource
  */
 
+include_once './vendor/autoload.php';
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

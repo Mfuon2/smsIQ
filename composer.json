@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kriswallsmith/buzz": "*",
+        "phpoffice/phpspreadsheet": "^1.3"
+    }
+}
