@@ -1,4 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+include_once './../../vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class Admin extends CI_Controller
 {
@@ -577,6 +582,21 @@ class Admin extends CI_Controller
             $this->db->insert('enroll', $data2);
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
+        }
+        if($param1 == 'uploadStudentsFile'){
+
+            require '../../vendor/autoload.php';
+
+            $spreadSheet = new Spreadsheet();
+            $sheet = $spreadSheet->getActiveSheet();
+            $sheet->setCellValue('A1', 'Hello World !');
+
+            $writer = new Xlsx($spreadSheet);
+            $writer->save('TESTTESTworld.xlsx');
+
+            echo '****************************';
+            echo '<script>alert("Yes Yes")</script>';
+            redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
         if ($param1 == 'do_update') 
         {

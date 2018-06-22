@@ -67,7 +67,7 @@ var neonLogin = neonLogin || {};
 						dataType: 'json',
 						data: {
 							email: $("input#user").val(),
-							password: $("input#password").val(),
+							password: $("input#password").val()
 						},
 						error: function()
 						{
@@ -86,13 +86,13 @@ var neonLogin = neonLogin || {};
 							setTimeout(function()
 							{
 								// If login is invalid, we store the 
-								if(login_status == 'invalid')
+								if(login_status === 'invalid')
 								{
 									$(".login-page").removeClass('logging-in');
 									neonLogin.resetProgressBar(true);
 								}
 								else
-								if(login_status == 'success')
+								if(login_status === 'success')
 								{
 									// Redirect to login page
 									setTimeout(function()
@@ -105,7 +105,7 @@ var neonLogin = neonLogin || {};
 										}
 										
 										window.location.href = redirect_url;
-									}, 400);
+									}, 5);
 								}
 								
 							}, 1000);
@@ -355,7 +355,7 @@ var neonLogin = neonLogin || {};
 			
 			// Create Progress Circle
 			var bg = neonLogin.lockscreen_progress_canvas,
-				ctx = ctx = bg.getContext('2d'),
+				ctx = bg.getContext('2d'),
 				imd = null,
 				circ = Math.PI * 2,
 				quart = Math.PI / 2,

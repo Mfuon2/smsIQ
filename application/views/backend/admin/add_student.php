@@ -7,18 +7,91 @@
             <li class="active"><?php echo get_phrase('Add-Student'); ?></li>
         </ol>
     </div>
+
 </div>
 
+<div class="form-group" style="float: right ">
+
+    <script>
+        // Slowly Replace the div Containers for the dashboard
+        /*$("#upload-excel").click(function () {
+            $("#single-student").hide("slow", function () {
+                enableField("students-register");
+                $("#students-register").show("slow");
+            });
+        });*/
+
+        function replaceContent(div_id){
+            enableField("students-register");
+            hideField("single-student");
+            em(div_id).innerHTML = em("students-register").innerHTML
+        }
+
+        function em(div_Id) {
+            return document.getElementById(div_Id);
+        }
+
+        function hideField(div_Id) {
+            return em(div_Id).hidden = true;
+        }
+
+        function enableField(div_Id) {
+            return em(div_Id).hidden = false;
+        }
+    </script>
+    <div class="col-sm-3">
+        <button  onclick="replaceContent('students-register')" id="upload-excel" class="btn btn-info">Excel</button>
+    </div>
+
+    <div class="col-sm-offset-3 col-sm-3">
+        <button type="submit" class="btn btn-info">CVS</button>
+    </div>
+</div>
+
+
 <div class="row">
+
 	<div class="col-md-12">
-		<div class="panel panel-info" data-collapsed="0">
-        	<div class="panel-heading">
-            	<div class="panel-title" >
-					<font color="white"><?php echo get_phrase('Student-Form'); ?></font>
-            	</div>
+
+        <div class="panel panel-info" data-collapsed="0">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <font color="white"><?php echo get_phrase('Student-Form'); ?></font>
+                </div>
             </div>
 
-			<div class="panel-body">
+            <div class="panel-body" id="students-register" hidden>
+
+                <?php echo form_open(base_url() . 'index.php?admin/student/uploadStudentsFile/', array('class' => 'form-horizontal form-groups-bordered validate', 'enctype' => 'multipart/form-data')); ?>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                        <label class="control-label"
+                               style="margin-bottom: 5px;"><?php echo get_phrase('Class'); ?></label>
+                        <select name="class_id" id="class_id" class="form-control selectboxit" required="required"
+                                onchange="get_sections(this.value)" data-validate="required"
+                                data-message-required="<?php echo get_phrase('Required'); ?>">
+                            <option value=""><?php echo get_phrase('Select'); ?></option>
+                            <?php
+                            $classes = $this->db->get('class')->result_array();
+                            foreach ($classes as $row):
+                                ?>
+                                <option value="<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <label for="field-1"
+                           class="col-sm-3 control-label"><?php echo get_phrase('Upload Excel File'); ?></label>
+                    <div class="col-sm-5">
+                        <input type="file" class="form-control" name="name" required="" value="" autofocus>
+                    </div>
+
+                    <input type="submit" class="btn btn-info" name="uploadFile" value="Upload"/>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+
+			<div class="panel-body" id="single-student">
+
                 <?php echo form_open(base_url() . 'index.php?admin/student/create/' , array('class' => 'form-horizontal form-groups-bordered validate', 'enctype' => 'multipart/form-data'));?>
 					<div class="form-group">
 						<label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Name'); ?></label>
@@ -190,6 +263,7 @@
 					</div>
                 <?php echo form_close();?>
             </div>
+
         </div>
     </div>
 </div>
