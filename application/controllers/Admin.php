@@ -12,6 +12,7 @@ class Admin extends CI_Controller
 		parent::__construct();
 		$this->load->database();
         $this->load->library('session');
+        $this->load->library('excel');
 		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->output->set_header('Pragma: no-cache');		
     }
@@ -568,6 +569,7 @@ class Admin extends CI_Controller
             $data['parent_id']      = $this->input->post('parent_id');
             $data['dormitory_id']  = $this->input->post('dormitory_id');
             $data['transport_id']  = $this->input->post('transport_id');
+            //
             $this->db->insert('student', $data);
             $student_id = $this->db->insert_id();
             $data2['student_id']     = $student_id;
@@ -585,18 +587,84 @@ class Admin extends CI_Controller
         }
         if($param1 == 'uploadStudentsFile'){
 
-            require '../../vendor/autoload.php';
+            if ($this->session->userdata('admin_login') != 1)
+                redirect('login', 'refresh');
+            $running_year = $this->db->get_where('settings' , array(
+                'type' => 'running_year'
+            ))->row()->description;
+
+            if(isset($_FILES["file"]["name"]))
+            {
+                $path = $_FILES["file"]["tmp_name"];
+                $object = PHPExcel_IOFactory::load($path);
+                foreach($object->getWorksheetIterator() as $worksheet)
+                {
+                    $highestRow = $worksheet->getHighestRow();
+                    $highestColumn = $worksheet->getHighestColumn();
+                    for($row=2; $row<=$highestRow; $row++)
+                    {
+                        $admission_number = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                        $dateOfAdmission = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                        $name = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                        $username = $worksheet->getCellByColumnAndRow(3, $row)->getValue();//username
+                        $birthday = $worksheet->getCellByColumnAndRow(4, $row)->getValue();//birthday
+                        $date = $worksheet->getCellByColumnAndRow(5, $row)->getValue();//birthday
+                        $sex = $worksheet->getCellByColumnAndRow(6, $row)->getValue();//birthday
+                        $address = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                        $phone = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                        $password = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                        $lastSchoolAttended = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+                        $religion = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                        $data[] = array(
+                            'admissionNo'		=>	$admission_number,//not
+                            'dateOfAdmission'	=>	$dateOfAdmission,
+                            'name'		=>	$name,
+                            'username'	=>	$username,
+                            'birthday'	=>	$birthday,
+                            'date'		=>	$date,
+                            'sex'		=>	$sex,
+                            'address'	=>	$address,
+                            'phone'		=>	$phone,
+                            'password'	=>	sha1($password),
+                            'lastSchoolAttended'=>	$lastSchoolAttended,
+                            'religion'	=>	$religion
+                        );
+                        $this->db->insert_batch('student',$data);
+                        //save enrollment
+                        $student_id = $this->db->insert_id();
+                        $enroll_code =  substr(md5(rand(0, 1000000)), 0, 7);
+                        $class_id  = $this->input->post('class_id');
+                        if ($this->input->post('section_id') != '') {
+                            $section_id = $this->input->post('section_id');
+                        }
+
+                        $roll = substr(md5(rand(0, 1000000)), 0, 7);
+                        $date_added   = strtotime(date("Y-m-d H:i:s"));
+                        $enrollmentYear  = $running_year;
+                        $data2[] = array(
+                            'enroll_code'   => $enroll_code,
+                            'student_id'    => $student_id,
+                            'class_id'      => $class_id,
+                            'section_id'    => $section_id,
+                            'roll'          => $roll,
+                            'date_added'   => $date_added,
+                            'year'          => $enrollmentYear
+                        );
+                        $this->db->insert_batch('enroll', $data2);
+                    }
+                }
+            }
 
             $spreadSheet = new Spreadsheet();
             $sheet = $spreadSheet->getActiveSheet();
             $sheet->setCellValue('A1', 'Hello World !');
 
-            $writer = new Xlsx($spreadSheet);
-            $writer->save('TESTTESTworld.xlsx');
+            $writer = new Xlsx($data);
+            $writer->save('C:/xampp/htdocs/how/nameoffile3344.xls');
 
             echo '****************************';
             echo '<script>alert("Yes Yes")</script>';
-            redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
+            redirect(base_url() . 'index.php?admin/students_area/' . $this->input->post('class_id'), 'refresh');
         }
         if ($param1 == 'do_update') 
         {
