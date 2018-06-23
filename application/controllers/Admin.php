@@ -1,4 +1,11 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if
+    /**
+     * Created by PhpStorm.
+     * User: Mfuon
+     * Date: 06/26/2018
+     * Time: 11:45 PM
+     */
+(!defined('BASEPATH')) exit('No direct script access allowed');
 include_once './../../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -597,13 +604,21 @@ class Admin extends CI_Controller
             {
                 $path = $_FILES["file"]["tmp_name"];
                 $object = PHPExcel_IOFactory::load($path);
+                $students = $this->db->get('student')->result_array();
                 $templateCode = "TMP-". $this->input->post('templateCode');
+                foreach ($students as $st){
+                    if($st['templatecode'] == $templateCode){
+                      echo '<script>alert("Template Code Already Consumed Use Another Code")</script>';
+                        redirect(base_url() . 'index.php?admin/add_student', 'refresh');
+                      return;
+                    }
+                }
+
                 foreach($object->getWorksheetIterator() as $worksheet)
                 {
                     $highestRow = $worksheet->getHighestRow();
                     $highestColumn = $worksheet->getHighestColumn();
                     for($row=2; $row <= $highestRow; $row++) {
-
                        $admission_number = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                         $dateOfAdmission = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                         $name = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
@@ -633,7 +648,12 @@ class Admin extends CI_Controller
                         );
 
                     }
-                    $this->db->insert_batch('student',$data);
+                    try{
+                        $this->db->insert_batch('student',$data);
+                    }catch (mysqli_sql_exception $e){
+                        return $e;
+                    }
+
                     reset($data);
                     $students = $this->db->get('student')->result_array();
                     foreach ($students as $student){
@@ -662,8 +682,6 @@ class Admin extends CI_Controller
                     reset($data2);
                 }
             }
-
-            echo '<script>alert("Yes Yes")</script>';
             redirect(base_url() . 'index.php?admin/students_area/' . $this->input->post('class_id'), 'refresh');
         }
         if ($param1 == 'do_update') 

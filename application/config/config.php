@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Mfuon
+ * Date: 01/02/2018
+ * Time: 10:55 AM
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = 'http://localhost/pro_sms/';
 $config['index_page'] = 'index.php';

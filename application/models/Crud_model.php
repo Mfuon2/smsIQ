@@ -1,4 +1,12 @@
-<?php if (!defined('BASEPATH'))
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Mfuon
+ * Date: 01/21/2018
+ * Time: 10:25 PM
+ */
+
+if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Crud_model extends CI_Model 
