@@ -20,7 +20,7 @@
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/attendance_report" class="waves-effect"><i class="ti-check-box"></i> <span class="hide-menu"><?php echo get_phrase('Attendance-Report'); ?></span></a>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?student/unit_content/<?php echo $this->session->userdata('login_user_id');?>" class="waves-effect"><i class="fa fa-cubes"></i> <span class="hide-menu"><?php echo get_phrase('Semester-Content'); ?></span></a>
+                    <li> <a href="<?php echo base_url(); ?>index.php?student/unit_content/<?php echo $this->session->userdata('login_user_id');?>" class="waves-effect"><i class="fa fa-cubes"></i> <span class="hide-menu"><?php echo get_phrase('Term-Content'); ?></span></a>
                     </li>
                      <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/study_material" class="waves-effect"><i class="fa fa-slack"></i> <span class="hide-menu"><?php echo get_phrase('Study-Material'); ?></span></a>
                     </li>

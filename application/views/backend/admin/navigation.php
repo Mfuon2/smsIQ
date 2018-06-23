@@ -47,7 +47,7 @@
                     </li>
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-graduation-cap"></i> <span class="hide-menu"><?php echo get_phrase('Qualifications'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/semesters"><?php echo get_phrase('Semesters'); ?></a></li>
+                            <li> <a href="<?php echo base_url(); ?>index.php?admin/semesters"><?php echo get_phrase('Term'); ?></a></li>
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/upload_marks"><?php echo get_phrase('Upload-Marks'); ?></a></li>
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/tab_sheet"><?php echo get_phrase('Tabulation'); ?></a></li>
                         </ul>

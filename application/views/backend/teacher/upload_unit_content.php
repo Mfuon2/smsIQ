@@ -3,7 +3,7 @@
         <div class="panel panel-info" data-collapsed="0">
             <div class="panel-heading">
                 <div class="panel-title" >
-                  <font color="white"> <?php echo get_phrase('Semester-Content'); ?></font>
+                  <font color="white"> <?php echo get_phrase('Term-Content'); ?></font>
                 </div>
             </div>
             <div class="panel-body">

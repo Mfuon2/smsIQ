@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-				<label class="control-label"><?php echo get_phrase('Semester');?></label>
+				<label class="control-label"><?php echo get_phrase('Term');?></label>
 					<select name="exam_id" class="form-control selectboxit">
                         <option value=""><?php echo get_phrase('Select');?></option>
                         <?php 

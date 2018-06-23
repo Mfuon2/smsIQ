@@ -761,7 +761,7 @@ INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`
 (2066, 'Update-Information', 'Update Profile', 'Actualizar perfil', 'atualizar', 'अद्यतन', 'mettre à jour', 'ажурирање', 'تحديث'),
 (2065, 'No', 'No', 'No', 'não', 'नहीं', 'pas', 'не', 'ليس'),
 (2064, 'Yes', 'Yes', 'Si', 'se', 'यदि', 'si', 'ако', 'إذا'),
-(2063, 'This-Month', 'This month is her birthday', 'Este mes es su cumpleaños', 'Este mês é seu aniversário', 'इस महीने अपने जन्मदिन है', 'Ce mois-ci est votre anniversaire', 'Овог месеца је ваш рођендан', 'هذا الشهر هو عيد ميلادك'),
+(2063, 'This-Month', 'This months birthday', 'Este mes es su cumpleaños', 'Este mês é seu aniversário', 'इस महीने अपने जन्मदिन है', 'Ce mois-ci est votre anniversaire', 'Овог месеца је ваш рођендан', 'هذا الشهر هو عيد ميلادك'),
 (2059, 'Class-Assigned', 'Assigned Class', 'Salón Asignado', 'alocados Salão', 'आवंटित हॉल', 'Numéroté Salle', 'издвојила сала', 'قاعة المخصصة'),
 (2060, 'Excellent', '\nExcellent Student', 'Alumno Excelente', 'excelente aluno', 'उत्कृष्ट छात्र', 'Excellente élève', 'одличан ученик', 'طالب ممتاز'),
 (2026, 'Academic-Settings', 'Academic Settings', 'Ajustes Académicos', 'ambientes acadêmicos', 'शैक्षिक सेटिंग्स', 'paramètres académiques', 'Ацадемиц подешавања', 'إعدادات الأكاديمية'),

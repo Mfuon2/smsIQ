@@ -15,7 +15,7 @@ foreach ( $edit_data as $row):
                 <?php echo form_open(base_url() . 'index.php?admin/semesters/edit/do_update/'.$row['exam_id'] , array('class' => 'form-horizontal form-groups-bordered validate','target'=>'_top'));?>
             <div class="padded">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label"><?php echo get_phrase('Semester');?></label>
+                    <label class="col-sm-4 control-label"><?php echo get_phrase('Term');?></label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" name="name" value="<?php echo $row['name'];?>" data-validate="required" data-message-required="<?php echo get_phrase('Required');?>"/>
                     </div>

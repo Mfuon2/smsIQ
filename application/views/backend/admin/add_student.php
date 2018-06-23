@@ -169,7 +169,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Section'); ?></label>
+						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Stream'); ?></label>
 		                    <div class="col-sm-5">
 		                        <select name="section_id" class="form-control" id="section_selector_holder">
 		                            <option value=""><?php echo get_phrase('Select-Class'); ?></option>

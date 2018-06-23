@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col-md-2">
 		<div class="form-group">
-		<label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Semester');?></label>
+		<label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Term');?></label>
 			<select name="exam_id" class="form-control selectboxit">
 				<?php $exams = $this->db->get_where('exam' , array('year' => $running_year))->result_array();
 					foreach($exams as $row):

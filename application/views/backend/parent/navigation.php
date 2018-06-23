@@ -26,7 +26,7 @@
                     </li>
                      <li> <a href="<?php echo base_url(); ?>index.php?parents/attendance_report" class="waves-effect"><i class="ti-check-box"></i> <span class="hide-menu"><?php echo get_phrase('Attendance-Report'); ?></span></a>
                     </li>
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-cubes"></i> <span class="hide-menu"><?php echo get_phrase('Semester-Content'); ?><span class="fa arrow"></span></span></a>
+                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-cubes"></i> <span class="hide-menu"><?php echo get_phrase('Term-Content'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                           <?php $children_of_parent = $this->db->get_where('student' , array('parent_id' => $this->session->userdata('parent_id')))->result_array();
                             foreach ($children_of_parent as $row): ?>

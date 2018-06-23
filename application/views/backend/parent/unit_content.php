@@ -1,12 +1,12 @@
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-       <h4 class="page-title"><?php echo get_phrase('Semester-Content'); ?></h4> 
+       <h4 class="page-title"><?php echo get_phrase('Term-Content'); ?></h4>
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url(); ?>index.php?parents/parents_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li>
-            <li class="active"><?php echo get_phrase('Semester-Content'); ?></li>
+            <li class="active"><?php echo get_phrase('Term-Content'); ?></li>
         </ol>
     </div>
 </div>
