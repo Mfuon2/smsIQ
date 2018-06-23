@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c737ef87-8734-4f4e-bf08-ff36aef464e5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/Admin.php" afterPath="$PROJECT_DIR$/application/controllers/Admin.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/add_student.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/add_student.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/marks_upload.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/marks_upload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/navigation.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/navigation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/semester.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/semester.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/tab_sheet.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/tab_sheet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/units_edit.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/units_edit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/admin/upload_marks.php" afterPath="$PROJECT_DIR$/application/views/backend/admin/upload_marks.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/parent/navigation.php" afterPath="$PROJECT_DIR$/application/views/backend/parent/navigation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/parent/unit_content.php" afterPath="$PROJECT_DIR$/application/views/backend/parent/unit_content.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/student/navigation.php" afterPath="$PROJECT_DIR$/application/views/backend/student/navigation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/student/unit_content.php" afterPath="$PROJECT_DIR$/application/views/backend/student/unit_content.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/teacher/marks_upload.php" afterPath="$PROJECT_DIR$/application/views/backend/teacher/marks_upload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/teacher/tab_sheet.php" afterPath="$PROJECT_DIR$/application/views/backend/teacher/tab_sheet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/teacher/unit_content.php" afterPath="$PROJECT_DIR$/application/views/backend/teacher/unit_content.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/teacher/upload_marks.php" afterPath="$PROJECT_DIR$/application/views/backend/teacher/upload_marks.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/backend/teacher/upload_unit_content.php" afterPath="$PROJECT_DIR$/application/views/backend/teacher/upload_unit_content.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uploads/install.sql" afterPath="$PROJECT_DIR$/uploads/install.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -346,16 +329,15 @@
       <workItem from="1529649248747" duration="42000" />
       <workItem from="1529649345845" duration="37000" />
       <workItem from="1529649537350" duration="1518000" />
-      <workItem from="1529653126476" duration="43243000" />
+      <workItem from="1529653126476" duration="43706000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44851000" />
+    <option name="totallyTimeSpent" value="45314000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="1" width="1932" height="1045" extended-state="0" />
-    <editor active="true" />
+    <frame x="-6" y="1" width="1932" height="1045" extended-state="1" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26705757" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -365,7 +347,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997833" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
