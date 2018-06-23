@@ -597,13 +597,14 @@ class Admin extends CI_Controller
             {
                 $path = $_FILES["file"]["tmp_name"];
                 $object = PHPExcel_IOFactory::load($path);
+                $templateCode = "TMP-". $this->input->post('templateCode');
                 foreach($object->getWorksheetIterator() as $worksheet)
                 {
                     $highestRow = $worksheet->getHighestRow();
                     $highestColumn = $worksheet->getHighestColumn();
-                    for($row=2; $row<=$highestRow; $row++)
-                    {
-                        $admission_number = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    for($row=2; $row <= $highestRow; $row++) {
+
+                       $admission_number = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                         $dateOfAdmission = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                         $name = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
                         $username = $worksheet->getCellByColumnAndRow(3, $row)->getValue();//username
@@ -627,18 +628,24 @@ class Admin extends CI_Controller
                             'phone'		=>	$phone,
                             'password'	=>	sha1($password),
                             'lastSchoolAttended'=>	$lastSchoolAttended,
-                            'religion'	=>	$religion
+                            'religion'	=>	$religion,
+                            'templatecode' => $templateCode
                         );
-                        $this->db->insert_batch('student',$data);
+
+                    }
+                    $this->db->insert_batch('student',$data);
+                    reset($data);
+                    $students = $this->db->get('student')->result_array();
+                    foreach ($students as $student){
                         //save enrollment
-                        $student_id = $this->db->insert_id();
+                        $student_id = $student['student_id'];
                         $enroll_code =  substr(md5(rand(0, 1000000)), 0, 7);
                         $class_id  = $this->input->post('class_id');
                         if ($this->input->post('section_id') != '') {
                             $section_id = $this->input->post('section_id');
                         }
 
-                        $roll = substr(md5(rand(0, 1000000)), 0, 7);
+                        $roll ="ADM-".$student['admissionNo']."/".$running_year;
                         $date_added   = strtotime(date("Y-m-d H:i:s"));
                         $enrollmentYear  = $running_year;
                         $data2[] = array(
@@ -650,19 +657,12 @@ class Admin extends CI_Controller
                             'date_added'   => $date_added,
                             'year'          => $enrollmentYear
                         );
-                        $this->db->insert_batch('enroll', $data2);
                     }
+                    $this->db->insert_batch('enroll', $data2);
+                    reset($data2);
                 }
             }
 
-            $spreadSheet = new Spreadsheet();
-            $sheet = $spreadSheet->getActiveSheet();
-            $sheet->setCellValue('A1', 'Hello World !');
-
-            $writer = new Xlsx($data);
-            $writer->save('C:/xampp/htdocs/how/nameoffile3344.xls');
-
-            echo '****************************';
             echo '<script>alert("Yes Yes")</script>';
             redirect(base_url() . 'index.php?admin/students_area/' . $this->input->post('class_id'), 'refresh');
         }

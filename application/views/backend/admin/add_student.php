@@ -90,15 +90,19 @@
                                 <?php endforeach;?>
                             </select>
                         </div>
+                        <div class="form_group">
+                            <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Template Code');?></label>
+                            <input type="text" name="templateCode" id="templateCode" class="form-control"  required PLACEHOLDER="Template Code" autofocus>
+                        </div>
                     </div>
                     <div id="section_holder"></div>
                     <div class="col-md-3"></div>
+
+                </div>
+                <div class="col-sm-5">
                     <label for="field-1"
                            class="col-sm-3 control-label"><?php echo get_phrase('Upload Excel File'); ?></label>
-                    <div class="col-sm-5">
-                        <input type="file" name="file" id="file" class="form-control"  required accept=".xls, .xlsx" value="" autofocus>
-                    </div>
-
+                    <input type="file" name="file" id="file" class="form-control"  required accept=".xls, .xlsx" value="" autofocus>
                     <input type="submit" class="btn btn-info" name="uploadFile"  value="Upload"/>
                 </div>
                 <?php echo form_close(); ?>
