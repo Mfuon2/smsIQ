@@ -6,7 +6,7 @@
  * Time: 10:55 AM
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-$config['base_url'] = 'http://localhost/pro_sms/';
+$config['base_url'] = 'http://localhost/sms/';
 $config['index_page'] = 'index.php';
 $config['uri_protocol']	= 'QUERY_STRING';
 $config['url_suffix'] = '';

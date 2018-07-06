@@ -47,7 +47,8 @@
                                     if($row['teacher_id'] != '' || $row['teacher_id'] != 0) 
                                         echo $this->crud_model->get_type_name_by_id('teacher',$row['teacher_id']);
                                 ?></td>
-              <td style="text-align: center;" class="text-nowrap"><a href="#" data-toggle="tooltip" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_class/<?php echo $row['class_id'];?>');" data-original-title="Edit"> <i class="fa fa-edit text-info"></i> </a></td>
+              <td style="text-align: center;" class="text-nowrap">
+                  <a href="#" data-toggle="tooltip" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_class/<?php echo $row['class_id'];?>');" data-original-title="Edit"> <i class="fa fa-edit text-info"></i> </a></td>
 
 			         <td style="text-align: center;" class="text-nowrap"><a href="#" data-toggle="tooltip" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/manage_classes/delete/<?php echo $row['class_id'];?>');" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a></td>
                 </tr>

@@ -94,8 +94,12 @@ class Admin extends CI_Controller
         if ($this->session->userdata('admin_login') != 1)
             redirect(base_url(), 'refresh');
         if ($param1 == 'create') {
-            $data['name'] = $this->input->post('name');
+            $data['name'] = strtoupper($this->input->post('name'));
             $data['username'] = $this->input->post('username');
+            $data['tscNo'] = $this->input->post('tscNo');
+            $data['nationalId'] = $this->input->post('nationalId');
+            $data['doa'] = $this->input->post('doa');
+            $data['birthday'] = $this->input->post('dob');
             $data['salary'] = $this->input->post('salary');
             $data['sex'] = $this->input->post('sex');
             $data['address'] = $this->input->post('address');
@@ -108,8 +112,11 @@ class Admin extends CI_Controller
             redirect(base_url() . 'index.php?admin/teacher_profile/' . $teacher_id, 'refresh');
         }
         if ($param1 == 'do_update') {
-            $data['name'] = $this->input->post('name');
+            $data['name'] = strtoupper($this->input->post('name'));
             $data['username'] = $this->input->post('username');
+            $data['tscNo'] = $this->input->post('tscNo');
+            $data['nationalId'] = $this->input->post('nationalId');
+            $data['doa'] = $this->input->post('doa');
             $data['salary'] = $this->input->post('salary');
             $data['birthday'] = $this->input->post('birthday');
             $data['address'] = $this->input->post('address');
@@ -332,7 +339,6 @@ class Admin extends CI_Controller
         $this->load->view('backend/index', $page_data);
     }
 
-
     function pages($param1 = '', $param2 = '', $param3 = '')
     {
         if ($this->session->userdata('admin_login') != 1)
@@ -348,7 +354,6 @@ class Admin extends CI_Controller
             redirect(base_url() . 'index.php?admin/manage_pages/', 'refresh');
         }
     }
-
 
     function request($param1 = "", $param2 = "")
     {
@@ -869,6 +874,39 @@ class Admin extends CI_Controller
         $page_data['classes'] = $this->db->get('class')->result_array();
         $page_data['page_name'] = 'manage_class';
         $page_data['page_title'] = get_phrase('Manage-Classes');
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function manage_departments($param1 = '', $param2 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url(), 'refresh');
+        if ($param1 == 'create') {
+            $data['name'] = strtoupper($this->input->post('name'));
+            $data['teacher_id'] = $this->input->post('teacher_id');
+            $this->db->insert('departments', $data);
+            redirect(base_url() . 'index.php?admin/manage_departments/', 'refresh');
+        }
+        if ($param1 == 'do_update') {
+            $data['name'] = strtoupper($this->input->post('name'));
+            $data['teacher_id'] = $this->input->post('teacher_id');
+
+            $this->db->where('department_id', $param2);
+            $this->db->update('departments', $data);
+            redirect(base_url() . 'index.php?admin/manage_departments/', 'refresh');
+        } else if ($param1 == 'edit') {
+            $page_data['edit_data'] = $this->db->get_where('departments', array(
+                'department_id' => $param2
+            ))->result_array();
+        }
+        if ($param1 == 'delete') {
+            $this->db->where('department_id', $param2);
+            $this->db->delete('departments');
+            redirect(base_url() . 'index.php?admin/manage_departments/', 'refresh');
+        }
+        $page_data['departments'] = $this->db->get('departments')->result_array();
+        $page_data['page_name'] = 'manage_department';
+        $page_data['page_title'] = get_phrase('Manage Departments');
         $this->load->view('backend/index', $page_data);
     }
 
