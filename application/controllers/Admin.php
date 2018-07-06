@@ -633,7 +633,6 @@ class Admin extends CI_Controller
                     } catch (mysqli_sql_exception $e) {
                         return $e;
                     }
-
                     reset($data);
                     $students = $this->db->get('student')->result_array();
                     foreach ($students as $student) {
@@ -660,8 +659,18 @@ class Admin extends CI_Controller
                     }
                     $this->db->insert_batch('enroll', $data2);
                     reset($data2);
+
                 }
             }
+
+            $this->db->where('birthday',null);
+            $students = $this->db->get('student')->result_array();
+            foreach ($students as $st){
+                $this->db->where('student_id', $st['student_id']);
+                $this->db->delete('enroll');
+            }
+            $this->db->where('admissionNo','');
+            $this->db->delete('student');
             redirect(base_url() . 'index.php?admin/students_area/' . $this->input->post('class_id'), 'refresh');
         }
         if ($param1 == 'do_update') {
