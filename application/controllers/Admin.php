@@ -1187,6 +1187,9 @@ class Admin extends CI_Controller
 
     function marks_update($exam_id = '', $class_id = '', $section_id = '', $subject_id = '')
     {
+        $numOfCats = $this->db->get_where('academic_settings', array('type' => 'numOfCats'))->row()->description;
+        $catOutOf = $this->db->get_where('academic_settings', array('type' => 'catOutOf'))->row()->description;
+        $endTermOutOf = $this->db->get_where('academic_settings', array('type' => 'endTermOutOf'))->row()->description;
         $running_year = $this->db->get_where('settings', array('type' => 'running_year'))->row()->description;
         $marks_of_students = $this->db->get_where('mark', array(
             'exam_id' => $exam_id, 'class_id' => $class_id,
@@ -1195,6 +1198,12 @@ class Admin extends CI_Controller
         foreach ($marks_of_students as $row) {
             $obtained_marks = $this->input->post('marks_obtained_' . $row['mark_id']);
             $labouno = $this->input->post('lab_uno_' . $row['mark_id']);
+
+            if($obtained_marks > $catOutOf || $labouno > $catOutOf){
+                echo '<script>alert("Check Cat Marks for ")</script>' . $obtained_marks . " OR " . $labouno;
+                redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
+                return;
+            }
             $labodos = $this->input->post('lab_dos_' . $row['mark_id']);
             $labotres = $this->input->post('lab_tres_' . $row['mark_id']);
             $labocuatro = $this->input->post('lab_cuatro_' . $row['mark_id']);
@@ -1204,12 +1213,73 @@ class Admin extends CI_Controller
             $laboocho = $this->input->post('lab_ocho_' . $row['mark_id']);
             $comment = $this->input->post('comment_' . $row['mark_id']);
             $labonueve = $this->input->post('lab_nueve_' . $row['mark_id']);
+            $averageCat = ($obtained_marks + $labouno)/$numOfCats;
             $labototal = $obtained_marks + $labouno + $labodos + $labotres + $labocuatro + $labocinco + $laboseis + $labosiete + $laboocho + $labonueve;
+
+            if ($this->db->get_where('academic_settings', array('type' => 'allowLegacy'))->row()->description == 1){
+                if($labonueve > $endTermOutOf ){
+                    echo '<script>alert("Check End Term Marks ")</script>' . $obtained_marks . " OR " . $labouno;
+                    redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
+                    return;
+                }
+
+                $labototal = $averageCat + $labonueve;
+
+                switch ($labototal) {
+                    case $labototal >= 70:
+                        $grade = 'A';
+                        $comment = "Excelent Work";
+                        break;
+                    case $labototal >= 65:
+                        $grade = 'A-';
+                        $comment = "Good Work";
+                        break;
+                    case $labototal >= 60:
+                        $grade = 'B+';
+                        $comment = "Above Average";
+                        break;
+                    case $labototal >= 55:
+                        $grade = 'B';
+                        $comment = "Average";
+                        break;
+                    case $labototal >= 50:
+                        $grade = 'B-';
+                        $comment = "Below Average";
+                        break;
+                    case $labototal >= 45:
+                        $grade = 'C+';
+                        $comment = "You can Do better";
+                        break;
+                    case $labototal >= 40:
+                        $grade = 'C';
+                        $comment = "Pull Up your Socks";
+                        break;
+                    case $labototal >= 35:
+                        $grade = 'C-';
+                        $comment = "Very Low";
+                        break;
+                    case $labototal >= 30:
+                        $grade = 'D+';
+                        $comment = "Revisit Subject";
+                        break;
+                    case $labototal >= 25:
+                        $grade = 'D';
+                        $comment = "Poor";
+                        break;
+                    case $labototal >= 20:
+                        $grade = 'D';
+                        $comment = "Very Poor";
+                        break;
+                    default:
+                        $grade = 'E';
+                        $comment = "Revise Subjectt";
+                }
+            }
 
             $this->db->where('mark_id', $row['mark_id']);
             $this->db->update('mark', array('mark_obtained' => $obtained_marks, 'labuno' => $labouno
             , 'labdos' => $labodos, 'labtres' => $labotres, 'labcuatro' => $labocuatro, 'labcinco' => $labocinco, 'labseis' => $laboseis
-            , 'labsiete' => $labosiete, 'labocho' => $laboocho, 'labnueve' => $labonueve, 'labtotal' => $labototal, 'comment' => $comment));
+            , 'labsiete' => $labosiete, 'labocho' => $laboocho, 'labnueve' => $labonueve,'averageCat'=>$averageCat, 'labtotal' => $labototal,'grade' => $grade, 'comment' => $comment));
         }
         redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
     }
@@ -1998,6 +2068,22 @@ class Admin extends CI_Controller
 
             $data['description'] = $this->input->post('teacher_average');
             $this->db->where('type', 'teacher_average');
+            $this->db->update('academic_settings', $data);
+
+            $data['description'] = $this->input->post('numOfCats');
+            $this->db->where('type', 'numOfCats');
+            $this->db->update('academic_settings', $data);
+
+            $data['description'] = $this->input->post('endTermOutOf');
+            $this->db->where('type', 'endTermOutOf');
+            $this->db->update('academic_settings', $data);
+
+            $data['description'] = $this->input->post('catOutOf');
+            $this->db->where('type', 'catOutOf');
+            $this->db->update('academic_settings', $data);
+
+            $data['description'] = $this->input->post('allowLegacy');
+            $this->db->where('type', 'allowLegacy');
             $this->db->update('academic_settings', $data);
 
             redirect(base_url() . 'index.php?admin/academic_settings/', 'refresh');

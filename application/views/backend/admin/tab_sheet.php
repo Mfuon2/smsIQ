@@ -123,7 +123,7 @@
 							if($marks->num_rows() > 0) 
 							{
 								$obtained_marks = $marks->row()->labtotal;
-								echo $obtained_marks;
+								echo $obtained_marks . " " .$marks->row()->grade;
 								$total_marks += $obtained_marks;
 							}
 						?>

@@ -96,13 +96,19 @@
 	<div class="col-md-12">
 	<div class="white-box">
 	<div class="table-responsive">
-		<?php echo form_open(base_url() . 'index.php?admin/marks_update/'.$exam_id.'/'.$class_id.'/'.$section_id.'/'.$subject_id);?>
+		<?php echo form_open(base_url() . 'index.php?admin/marks_update/'.$exam_id.'/'.$class_id.'/'.$section_id.'/'.$subject_id);
+
+        if ($this->db->get_where('academic_settings', array('type' => 'allowLegacy'))->row()->description == 2){
+
+		?>
+
+
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th style="text-align: center;"><?php echo get_phrase('Student');?></th>
 						<th style="text-align: center;"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la1;?></th>
-						<th style="text-align: center;"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la2;?></th>
+						<th style="text-align: center; background-color: #00a6fc"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la2;?></th>
 						<th style="text-align: center;"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la3;?></th>
 						<th style="text-align: center;"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la4;?></th>
 						<th style="text-align: center;"><?php echo $this->db->get_where('subject' , array('subject_id' => $subject_id))->row()->la5;?></th>
@@ -178,12 +184,83 @@
 				<?php endforeach;?>
 				</tbody>
 			</table>
-		<center>
-			<button type="submit" class="btn btn-info" id="submit_button">
-				<i class="fa fa-check"></i> <?php echo get_phrase('Upload');?>
-			</button>
-		</center>
-		<?php echo form_close();?>
+		<?php
+        }else{
+          ?>
+
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center;"><?php echo get_phrase('Student');?></th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">CAT ONE</th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">CAT TWO</th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">CAT AVERAGE</th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">FINAL EXAM</th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">TOTAL</th>
+                    <th style="text-align: center; background-color:#00a8e6; color: #FFFFFF">GRADE</th>
+                    <th style="text-align: center;"><?php echo get_phrase('Comments');?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $count = 1;
+                $marks_of_students = $this->db->get_where('mark' , array(
+                    'class_id' => $class_id,
+                    'section_id' => $section_id ,
+                    'year' => $running_year,
+                    'subject_id' => $subject_id,
+                    'exam_id' => $exam_id
+                ))->result_array();
+                foreach($marks_of_students as $row):
+                    ?>
+                    <tr style="align-items: center">
+                        <td>
+                            <?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
+                        </td>
+                        <td>
+                            <input type="text" id="catOne" class="form-control" name="marks_obtained_<?php echo $row['mark_id'];?>"
+                                   style="width:60px;height:30px" value="<?php echo $row['mark_obtained'];?>">
+                        </td>
+                        <td>
+                            <input type="text" id="catTwo" class="form-control" name="lab_uno_<?php echo $row['mark_id'];?>"
+                                   style="width:60px;height:30px" value="<?php echo $row['labuno'];?>">
+                        </td>
+
+                        <td>
+                            <input readonly type="text" id="avgCat" class="form-control" name="avgCat"
+                                   style="width:60px;height:30px" value="<?php echo $row['averageCat'];?>">
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="lab_nueve_<?php echo $row['mark_id'];?>"
+                                   style="width:60px;height:30px" value="<?php echo $row['labnueve'];?>">
+                        </td>
+                        <td>
+                            <input readonly type="text"  class="form-control" name="total"
+                                   style="width:60px;height:30px" value="<?php echo $row['labtotal'];?>">
+                        </td>
+                        <td>
+                            <input readonly type="text"  class="form-control" name="grade"
+                                   style="width:60px;height:30px" value="<?php echo $row['grade'];?>">
+                        </td>
+                        <td>
+                            <input readonly type="text" class="form-control" name="comment_<?php echo $row['mark_id'];?>"
+                                   value="<?php echo $row['comment'];?>">
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        <?php
+        }
+        ?>
+
+        <center>
+            <button type="submit" class="btn btn-info" id="submit_button">
+                <i class="fa fa-check"></i> <?php echo get_phrase('Upload');?>
+            </button>
+        </center>
+        <?php echo form_close();?>
 	</div>
 	<div class="col-md-2"></div>
 </div>

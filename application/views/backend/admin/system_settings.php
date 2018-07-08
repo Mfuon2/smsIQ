@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-    <?php echo form_open(base_url() . 'index.php?admin/system_settings/do_update' , 
+    <?php echo form_open(base_url() . 'index.php?admin/system_settings/do_update' ,
       array('class' => 'form-horizontal form-groups-bordered validate','target'=>'_top'));?>
         <div class="col-md-6">
             <div class="panel panel-info" >
