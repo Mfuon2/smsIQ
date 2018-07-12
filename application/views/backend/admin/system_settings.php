@@ -106,12 +106,12 @@
                       </div>
                   </div>
 
-                  <div class="form-group">
+                 <!-- <div class="form-group">
                       <label  class="col-sm-5 control-label">RTL</label>
                       <div class="col-sm-5">
-                          <input type="checkbox" value="rtl" <?php if($this->db->get_where('settings' , array('type' =>'rtl'))->row()->description == 'rtl') echo 'checked';?> name="rtl" class="js-switch" data-color="#13dafe" />
+                          <input type="checkbox" value="rtl" <?php /*if($this->db->get_where('settings' , array('type' =>'rtl'))->row()->description == 'rtl') echo 'checked';*/?> name="rtl" class="js-switch" data-color="#13dafe" />
                       </div>
-                  </div>
+                  </div>-->
                 <br>
                   
                   <div class="form-group">

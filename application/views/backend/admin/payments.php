@@ -1,3 +1,4 @@
+<?php $running_year = $this->db->get_where('settings', array('type' => 'running_year'))->row()->description; ?>
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         <h4 class="page-title"><?php echo get_phrase('Payments');?></h4>
@@ -35,6 +36,25 @@
                                                 <option value="<?php echo $row['class_id'];?>"><?php echo $row['name'];?></option>
                                                 <?php endforeach;?>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label"><?php echo get_phrase('Term'); ?></label>
+                                        <div class="col-sm-9">
+                                        <select required name="exam_id" class="form-control selectboxit">
+                                            <option value=""><?php echo get_phrase('Select'); ?></option>
+                                            <?php
+                                            $exams = $this->db->get_where('exam', array('year' => $running_year))->result_array();
+                                            foreach ($exams as $row):
+                                                ?>
+                                                <option value="<?php echo $row['exam_id']; ?>"
+                                                    <?php if ($exam_id == $row['exam_id']) echo 'selected'; ?>>
+                                                    <?php echo $row['name']; ?>
+                                                </option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -76,29 +96,37 @@
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Total');?></label>
+                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Control Amount');?></label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="amount"
-                                            placeholder="<?php echo get_phrase('Amount');?>"/>
+                                        <input id="amount" type="number" class="form-control" name="amount"
+                                            placeholder="<?php echo get_phrase('Amount');?>" required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Payment');?></label>
+                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Amount Paid');?></label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="amount_paid"
-                                            placeholder="<?php echo get_phrase('PaymentAmount');?>"
-                                            required/>
+                                        <input id="amount_paid" type="number" onkeyup="calculateBalance()" class="form-control" name="amount_paid"
+                                            placeholder="<?php echo get_phrase('Amount Paid');?>"
+                                            />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Status');?></label>
+                                    <label class="col-sm-3 control-label"><?php echo get_phrase('Balance');?></label>
+                                    <div class="col-sm-9">
+                                        <input id="balance" type="number" class="form-control" name="balance"
+                                               placeholder="<?php echo get_phrase('Balance');?>"
+                                               readonly/>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">
+                                    <label class="col-sm-3 control-label"><?php /*echo get_phrase('Status');*/?></label>
                                     <div class="col-sm-9">
                                         <select name="status" class="form-control selectboxit">
-                                            <option value="paid"><?php echo get_phrase('Paid');?></option>
-                                            <option value="unpaid"><?php echo get_phrase('Unpaid');?></option>
+                                            <option value="paid"><?php /*echo get_phrase('Paid');*/?></option>
+                                            <option value="unpaid"><?php /*echo get_phrase('Unpaid');*/?></option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"><?php echo get_phrase('Method');?></label>
                                     <div class="col-sm-9">
@@ -133,5 +161,15 @@
                 jQuery('#student_selection_holder').html(response);
             }
         });
+    }
+
+    function em(id) {
+       return document.getElementById(id)
+    }
+
+    function calculateBalance(){
+        var cntrlAmount = em("amount").value;
+        var paid = em("amount_paid").value;
+        return em("balance").value = +cntrlAmount - +paid
     }
 </script>

@@ -8,6 +8,7 @@
 (!defined('BASEPATH')
 ) exit('No direct script access allowed');
 include_once './../../vendor/autoload.php';
+require_once(APPPATH . "third_party/AfricasTalkingGateway.php");
 
 class Admin extends CI_Controller
 {
@@ -428,9 +429,14 @@ class Admin extends CI_Controller
             $data['amount'] = $this->input->post('amount');
             $data['amount_paid'] = $this->input->post('amount_paid');
             $data['due'] = $data['amount'] - $data['amount_paid'];
-            $data['status'] = $this->input->post('status');
+            if ($data['balance'] > 0) {
+                $data['status'] = 'Unpaid';
+            } else {
+                $data['status'] = 'Paid';
+            }
             $data['creation_timestamp'] = strtotime($this->input->post('date'));
             $data['year'] = $this->db->get_where('settings', array('type' => 'running_year'))->row()->description;
+            $data['term'] = $this->input->post('exam_id');
 
             $this->db->insert('invoice', $data);
             $invoice_id = $this->db->insert_id();
@@ -599,7 +605,7 @@ class Admin extends CI_Controller
                         $date = $worksheet->getCellByColumnAndRow(5, $row)->getValue();//birthday
                         $sex = $worksheet->getCellByColumnAndRow(6, $row)->getValue();//birthday
                         $address = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                        $father= $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                        $father = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
                         $fathersNo = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                         $mother = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
                         $MothersNo = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
@@ -663,13 +669,13 @@ class Admin extends CI_Controller
                 }
             }
 
-            $this->db->where('birthday',null);
+            $this->db->where('birthday', null);
             $students = $this->db->get('student')->result_array();
-            foreach ($students as $st){
+            foreach ($students as $st) {
                 $this->db->where('student_id', $st['student_id']);
                 $this->db->delete('enroll');
             }
-            $this->db->where('admissionNo','');
+            $this->db->where('admissionNo', '');
             $this->db->delete('student');
             redirect(base_url() . 'index.php?admin/students_area/' . $this->input->post('class_id'), 'refresh');
         }
@@ -1199,7 +1205,7 @@ class Admin extends CI_Controller
             $obtained_marks = $this->input->post('marks_obtained_' . $row['mark_id']);
             $labouno = $this->input->post('lab_uno_' . $row['mark_id']);
 
-            if($obtained_marks > $catOutOf || $labouno > $catOutOf){
+            if ($obtained_marks > $catOutOf || $labouno > $catOutOf) {
                 echo '<script>alert("Check Cat Marks for ")</script>' . $obtained_marks . " OR " . $labouno;
                 redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
                 return;
@@ -1213,11 +1219,11 @@ class Admin extends CI_Controller
             $laboocho = $this->input->post('lab_ocho_' . $row['mark_id']);
             $comment = $this->input->post('comment_' . $row['mark_id']);
             $labonueve = $this->input->post('lab_nueve_' . $row['mark_id']);
-            $averageCat = ($obtained_marks + $labouno)/$numOfCats;
+            $averageCat = ($obtained_marks + $labouno) / $numOfCats;
             $labototal = $obtained_marks + $labouno + $labodos + $labotres + $labocuatro + $labocinco + $laboseis + $labosiete + $laboocho + $labonueve;
 
-            if ($this->db->get_where('academic_settings', array('type' => 'allowLegacy'))->row()->description == 1){
-                if($labonueve > $endTermOutOf ){
+            if ($this->db->get_where('academic_settings', array('type' => 'allowLegacy'))->row()->description == 1) {
+                if ($labonueve > $endTermOutOf) {
                     echo '<script>alert("Check End Term Marks ")</script>' . $obtained_marks . " OR " . $labouno;
                     redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
                     return;
@@ -1226,7 +1232,7 @@ class Admin extends CI_Controller
                 $labototal = $averageCat + $labonueve;
 
                 switch ($labototal) {
-                    case $labototal >= 70:
+                    case $labototal >= 70 && $labototal <= 100:
                         $grade = 'A';
                         $comment = "Excelent Work";
                         break;
@@ -1270,16 +1276,24 @@ class Admin extends CI_Controller
                         $grade = 'D';
                         $comment = "Very Poor";
                         break;
+                    case $labototal >= 15:
+                        $grade = 'D-';
+                        $comment = "Very Poor";
+                        break;
+                    case $labototal >= 0:
+                        $grade = 'E';
+                        $comment = "Revise Subject";
+                        break;
                     default:
                         $grade = 'E';
-                        $comment = "Revise Subjectt";
+                        $comment = "";
                 }
             }
 
             $this->db->where('mark_id', $row['mark_id']);
             $this->db->update('mark', array('mark_obtained' => $obtained_marks, 'labuno' => $labouno
             , 'labdos' => $labodos, 'labtres' => $labotres, 'labcuatro' => $labocuatro, 'labcinco' => $labocinco, 'labseis' => $laboseis
-            , 'labsiete' => $labosiete, 'labocho' => $laboocho, 'labnueve' => $labonueve,'averageCat'=>$averageCat, 'labtotal' => $labototal,'grade' => $grade, 'comment' => $comment));
+            , 'labsiete' => $labosiete, 'labocho' => $laboocho, 'labnueve' => $labonueve, 'averageCat' => $averageCat, 'labtotal' => $labototal, 'grade' => $grade, 'comment' => $comment));
         }
         redirect(base_url() . 'index.php?admin/marks_upload/' . $exam_id . '/' . $class_id . '/' . $section_id . '/' . $subject_id, 'refresh');
     }
@@ -1317,6 +1331,92 @@ class Admin extends CI_Controller
         $page_data['class_id'] = $class_id;
         $page_data['exam_id'] = $exam_id;
         $this->load->view('backend/admin/tab_sheet_print', $page_data);
+    }
+
+    function sms($class_id = '', $exam_id = '')
+    {
+
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url(), 'refresh');
+
+
+            if ($this->input->post('operation') == 'selection') {
+                $page_data['exam_id'] = $this->input->post('exam_id');
+                $page_data['class_id'] = $this->input->post('class_id');
+
+                if ($page_data['exam_id'] > 0 && $page_data['class_id'] > 0) {
+                    redirect(base_url() . 'index.php?admin/sms/' . $page_data['class_id'] . '/' . $page_data['exam_id'], 'refresh');
+                } else {
+                    echo '<script>alert("yoloy")</script>';
+                    redirect(base_url() . 'index.php?admin/sms/', 'refresh');
+
+                }
+            }
+
+
+
+        $page_data['exam_id'] = $exam_id;
+        $page_data['class_id'] = $class_id;
+
+        $page_data['page_info'] = 'Exam marks';
+
+        $page_data['page_name'] = 'sms';
+        $page_data['page_title'] = get_phrase('Veryfy Students Marks');
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function sendSms($class_id = '', $exam_id = ''){
+        $running_year = $this->db->get_where('settings', array('type' => 'running_year'))->row()->description;
+        $exam_id = $this->input->post('exam_id');
+        $class_id = $this->input->post('class_id');
+
+        echo '<script>alert("yoloy")</script>';
+        // Specify your authentication credentials
+       /* $username   = "stjudetest";
+        $apikey     = "aaf3f13d11d182ae544e65da11867b0cafefa514d21c5851eae979f73b516726";
+        */
+        $username   = "Mfuon";
+        $apikey     = "eb8127bb0153970c5b6a8941fd4e59c74fb4fbc53484e33a73797e05f2f9023d";
+// Specify the numbers that you want to send to in a comma-separated list
+// Please ensure you include the country code (+254 for Kenya in this case)
+
+        $students = $this->db->get_where('sms_marks', array( 'year' => $running_year, 'term_id' => $exam_id,'class_id'=>$class_id))->result_array();
+
+        foreach ($students as $st){
+            $recipients = $st['contactNo'];
+            $message = $st['StudentName'] . " SUB ~ ENG:" . $st['eng']. " KISW:" . $st['kisw']. " BIO:" . $st['bio']. " CHEM:" . $st['chem']. " PHY" . $st['phy'] . "  FEE BAL: " . $st['balance'];
+
+            $gateway    = new AfricasTalkingGateway($username, $apikey);
+
+            try
+            {
+                // Thats it, hit send and we'll take care of the rest.
+                $gateway->sendMessage($recipients, $message);
+
+            }
+            catch ( AfricasTalkingGatewayException $e )
+            {
+                echo "Encountered an error while sending: ".$e->getMessage();
+                return;
+            }
+        }
+
+
+        /*************************************************************************************
+        NOTE: If connecting to the sandbox:
+        1. Use "sandbox" as the username
+        2. Use the apiKey generated from your sandbox application
+        https://account.africastalking.com/apps/sandbox/settings/key
+        3. Add the "sandbox" flag to the constructor
+        $gateway  = new AfricasTalkingGateway($username, $apiKey, "sandbox");
+         **************************************************************************************/
+// Any gateway error will be captured by our custom Exception class below,
+// so wrap the call in a try-catch block
+
+
+// DONE!!!
+
+        redirect(base_url() . 'index.php?admin/sms/', 'refresh');
     }
 
     function marks_get_subject($class_id)

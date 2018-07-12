@@ -106,6 +106,9 @@
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php?admin/tab_sheet"><?php echo get_phrase('Tabulation'); ?></a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php?admin/sms"><?php echo get_phrase('SMS Marks'); ?></a>
+                            </li>
                         </ul>
                     </li>
 
@@ -180,7 +183,7 @@
                                         class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php?admin/payments"><?php echo get_phrase('Student-Payment'); ?></a>
+                                <a href="<?php echo base_url(); ?>index.php?admin/payments"><?php echo get_phrase('Create Payment'); ?></a>
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php?admin/students_payments"><?php echo get_phrase('StudentPayment'); ?></a>
