@@ -615,11 +615,11 @@ class Admin extends CI_Controller
                         $religion = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                         $data[] = array(
                             'admissionNo' => $admission_number,//not
-                            'dateOfAdmission' => $dateOfAdmission,
+                            'dateOfAdmission' => strtotime($dateOfAdmission),
                             'name' => $name,
                             'username' => $username,
-                            'birthday' => $birthday,
-                            'date' => $date,
+                            'birthday' => strtotime($birthday),
+                            'date' => strtotime($date),
                             'sex' => $sex,
                             'address' => $address,
                             'father' => $father,
@@ -641,6 +641,39 @@ class Admin extends CI_Controller
                     }
                     reset($data);
                     $students = $this->db->get('student')->result_array();
+
+                    foreach ($students as $stnts){
+                        $student_id = $stnts['student_id'];
+                        $father = $stnts['father'];
+                        $mother= $stnts['mother'];
+                        $name = "Update Parent Name";
+                        if($father != null && $mother != null){
+                            $name = " Father : ". $father ." Mother : " . $mother;
+                        }else if($father != null && $mother == null ){
+                            $name = $father;
+                        }else if($father == null && $mother != null ){
+                            $name = $mother;
+                        }
+                        $fathersNo = $stnts['fathersNo'];
+                        $motherNo= $stnts['mothersNo'];
+                        $username = $stnts['admissionNo'];
+                        $password = sha1("1234");
+                        $data3[] = array(
+                            'name' => $name,
+                            'username' => $username,
+                            'password' => $password,
+                            'phone' => $fathersNo.",".$motherNo,
+                            'student_id' => $student_id
+                        );
+                    }
+                    try {
+                        $this->db->insert_batch('parent', $data3);
+                    } catch (mysqli_sql_exception $e) {
+                        return $e;
+                    }
+                    reset($data3);
+                    $this->update_students_parents($students);
+
                     foreach ($students as $student) {
                         //save enrollment
                         $student_id = $student['student_id'];
@@ -703,6 +736,17 @@ class Admin extends CI_Controller
     {
 
     }
+
+    function update_students_parents($students)
+    {
+        foreach ($students as $student){
+            $parentsData = $this->db->get_where('student', array('student_id' => $student['student_id']))->result_array();
+            $this->db->where('student_id', $student['student_id']);
+            $this->db->update('student', array('parent_id' => $parentsData['parent_id']));
+        }
+
+    }
+
 
     function student_promotion($param1 = '', $param2 = '')
     {
