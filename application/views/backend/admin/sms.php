@@ -120,7 +120,14 @@
                                 $admno = $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->admissionNo;
                                 $fathersNo = +$this->db->get_where('student', array('student_id' => $row['student_id']))->row()->fathersNo;
                                 $motherNo = +$this->db->get_where('student', array('student_id' => $row['student_id']))->row()->mothersNo;
-                                $parentNo = "+254" .$fathersNo. ",+254".$motherNo;
+
+                                if(($fathersNo != null || $fathersNo != '' ) && ($motherNo != null || $motherNo != '')){
+                                    $parentNo = "+254" .$fathersNo. ",+254".$motherNo;
+                                }elseif (($fathersNo != null || $fathersNo != '') && ($motherNo == null || $motherNo == '')){
+                                    $parentNo = "+254" .$fathersNo;
+                                }elseif (($fathersNo == null || $fathersNo == '') && ($motherNo != null || $motherNo != '')){
+                                    $parentNo = "+254" .$motherNo;
+                                }
 
                                 $termBalance = 0;
                                 $invoice = $this->db->get_where('invoice', array('student_id' => $row['student_id']));
@@ -189,10 +196,12 @@
                                         }
 
                                         $data2['totalMarks'] = $total_marks += $obtained_marks;
+                                        $data2['sendStatus'] = 'UNS';
 
-                                        $this->db->where('StudentName',$studentName);
-                                        $this->db->update('sms_marks',$data2);
-
+                                        if($data2['totalMarks'] > 0){
+                                            $this->db->where('StudentName',$studentName);
+                                            $this->db->update('sms_marks',$data2);
+                                        }
 
                                         echo $obtained_marks . " " . $marks->row()->grade;
                                         $total_marks += $obtained_marks;
@@ -222,7 +231,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label"><?php echo get_phrase('Class'); ?></label>
-                                <select name="class_id" class="form-control selectboxit">
+                                <select id="classId" required name="class_id" class="form-control selectboxit">
                                     <option value=""><?php echo get_phrase('Select'); ?></option>
                                     <?php
                                     $classes = $this->db->get('class')->result_array();
@@ -241,7 +250,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label"><?php echo get_phrase('Term'); ?></label>
-                                <select name="exam_id" class="form-control selectboxit">
+                                <select onclick="enable()" id="termSelect" required name="exam_id" class="form-control selectboxit">
                                     <option value=""><?php echo get_phrase('Select'); ?></option>
                                     <?php
                                     $exams = $this->db->get_where('exam', array('year' => $running_year))->result_array();
@@ -258,7 +267,7 @@
                             </div>
                         </div>
 
-                        <button><a class="btn btn-info" href="">
+                        <button id="btn"><a onclick="hideDiv()" class="btn btn-info" href="">
                                 <?php echo get_phrase('Send Parents SMS'); ?>
                             </a>
                         </button>
@@ -273,8 +282,12 @@
 <?php endif; ?>
 <script>
 
+    function enable() {
+        return document.getElementById("btn").disabled = false;
+    }
     function hideDiv() {
-        return document.getElementById('viewMarks').innerHTML = "";
+        var classId = document.getElementById('classId').value;
+        var termSelect = document.getElementById('termSelect').value;
     }
 </script>
 

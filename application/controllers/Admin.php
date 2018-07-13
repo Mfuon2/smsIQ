@@ -1,6 +1,6 @@
 <?php if
     /**
-     * Created by PhpStorm.
+     * SuccessfullyPhpStorm.
      * User: Mfuon
      * Date: 06/26/2018
      * Time: 11:45 PM
@@ -1391,7 +1391,6 @@ class Admin extends CI_Controller
                 if ($page_data['exam_id'] > 0 && $page_data['class_id'] > 0) {
                     redirect(base_url() . 'index.php?admin/sms/' . $page_data['class_id'] . '/' . $page_data['exam_id'], 'refresh');
                 } else {
-                    echo '<script>alert("yoloy")</script>';
                     redirect(base_url() . 'index.php?admin/sms/', 'refresh');
 
                 }
@@ -1413,8 +1412,6 @@ class Admin extends CI_Controller
         $running_year = $this->db->get_where('settings', array('type' => 'running_year'))->row()->description;
         $exam_id = $this->input->post('exam_id');
         $class_id = $this->input->post('class_id');
-
-        echo '<script>alert("yoloy")</script>';
         // Specify your authentication credentials
        /* $username   = "stjudetest";
         $apikey     = "aaf3f13d11d182ae544e65da11867b0cafefa514d21c5851eae979f73b516726";
@@ -1424,11 +1421,16 @@ class Admin extends CI_Controller
 // Specify the numbers that you want to send to in a comma-separated list
 // Please ensure you include the country code (+254 for Kenya in this case)
 
-        $students = $this->db->get_where('sms_marks', array( 'year' => $running_year, 'term_id' => $exam_id,'class_id'=>$class_id))->result_array();
-
+        $students = $this->db->get_where('sms_marks', array('sendStatus'=>'UNS', 'year' => $running_year, 'term_id' => $exam_id,'class_id'=>$class_id))->result_array();
+        $count = 0;
         foreach ($students as $st){
             $recipients = $st['contactNo'];
-            $message = $st['StudentName'] . " SUB ~ ENG:" . $st['eng']. " KISW:" . $st['kisw']. " BIO:" . $st['bio']. " CHEM:" . $st['chem']. " PHY" . $st['phy'] . "  FEE BAL: " . $st['balance'];
+            $message = $st['StudentName']
+                . " SUBJECTS:: ENG:" . $st['eng']. " KISW:" . $st['kisw']
+                . " MATH:" . $st['maths']. " CHEM:" . $st['chem']. " PHY" . $st['phy']
+                . " BIO:" . $st['bio']. " HIST:" . $st['hist']. " GEO" . $st['geo']
+                . " CRE:" . $st['cre']. " BST:" . $st['bst']. " AGRIC" . $st['agri']
+                . " HMSCI:" . $st['hmsci']. " COMP" . $st['comp'] . "  FEE BAL: " . $st['balance'];
 
             $gateway    = new AfricasTalkingGateway($username, $apikey);
 
@@ -1436,7 +1438,10 @@ class Admin extends CI_Controller
             {
                 // Thats it, hit send and we'll take care of the rest.
                 $gateway->sendMessage($recipients, $message);
-
+                $count++;
+                $dataSendStatus['sendStatus'] = 'SEN';
+                $this->db->where('StudentName',$st['contactNo']);
+                $this->db->update('sms_marks',$dataSendStatus);
             }
             catch ( AfricasTalkingGatewayException $e )
             {
@@ -1444,6 +1449,9 @@ class Admin extends CI_Controller
                 return;
             }
         }
+
+        echo " Message Count " .$count;
+        echo '<script>alert("SMS Sent Successfuly")</script>';
 
 
         /*************************************************************************************
@@ -1461,6 +1469,11 @@ class Admin extends CI_Controller
 // DONE!!!
 
         redirect(base_url() . 'index.php?admin/sms/', 'refresh');
+
+        $page_data['page_info'] = 'Exam marks';
+        $page_data['page_name'] = 'sms';
+        $page_data['page_title'] = get_phrase('Veryfy Students Marks');
+        $this->load->view('backend/index', $page_data);
     }
 
     function marks_get_subject($class_id)

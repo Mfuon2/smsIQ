@@ -35,7 +35,7 @@
                             <tr>
                                 <th style="text-align: center;"><?php echo get_phrase('Name'); ?></th>
                                 <th style="text-align: center;"><?php echo get_phrase('Username'); ?></th>
-                                <th style="text-align: center;"><?php echo get_phrase('Salary'); ?></th>
+                                <th style="text-align: center;"><?php echo get_phrase('TSC #'); ?></th>
                                 <th style="text-align: center;"><?php echo get_phrase('Phone'); ?></th>
                                 <th style="text-align: center;"><?php echo get_phrase('Email'); ?></th>
                                 <th style="text-align: center;"><?php echo get_phrase('Options'); ?></th>
@@ -49,7 +49,7 @@
                                 <tr>
                                     <td style="text-align: center;"><?php echo $row['name']; ?></td>
                                     <td style="text-align: center;"><?php echo $row['username']; ?></td>
-                                    <td style="text-align: center;"><?php echo $this->db->get_where('settings', array('type' => 'currency'))->row()->description; ?><?php echo $row['salary']; ?></td>
+                                    <td style="text-align: center;"><?php /*echo $this->db->get_where('settings', array('type' => 'currency'))->row()->description; */?><?php echo $row['tscNo']; ?></td>
                                     <td style="text-align: center;"><?php echo $row['phone']; ?></td>
                                     <td style="text-align: center;"><?php echo $row['email']; ?></td>
                                     <td style="text-align: center;" class="text-nowrap"><a
