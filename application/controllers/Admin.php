@@ -233,6 +233,7 @@ class Admin extends CI_Controller
             redirect(base_url(), 'refresh');
         if ($param1 == 'add_bulk_student') {
             $names = $this->input->post('name');
+            $admNos = $this->input->post('admNo');
             $rolls = $this->input->post('roll');
             $emails = $this->input->post('username');
             $passwords = $this->input->post('password');
@@ -242,6 +243,7 @@ class Admin extends CI_Controller
             $student_entries = sizeof($names);
             for ($i = 0; $i < $student_entries; $i++) {
                 $data['name'] = $names[$i];
+                $data['admissionNo'] = $admNos[$i];
                 $data['username'] = $emails[$i];
                 $data['password'] = sha1($passwords[$i]);
                 $data['date'] = strtotime(date("d M,Y"));
@@ -257,7 +259,10 @@ class Admin extends CI_Controller
                 if ($this->input->post('section_id') != '') {
                     $data2['section_id'] = $this->input->post('section_id');
                 }
-                $data2['roll'] = $rolls[$i];
+                $running_year = $this->db->get_where('settings', array(
+                    'type' => 'running_year'
+                ))->row()->description;
+                $data2['roll'] = "ADM-" . $admNos[$i] . "/" . $running_year;;
                 $data2['date_added'] = strtotime(date("Y-m-d H:i:s"));
                 $data2['year'] = $this->db->get_where('settings', array(
                     'type' => 'running_year'
@@ -545,6 +550,7 @@ class Admin extends CI_Controller
         ))->row()->description;
         if ($param1 == 'create') {
             $data['name'] = $this->input->post('name');
+            $data['admissionNo'] = $this->input->post('admNo');
             $data['username'] = $this->input->post('username');
             $data['birthday'] = $this->input->post('birthday');
             $data['date'] = strtotime(date("d M,Y"));
@@ -565,7 +571,7 @@ class Admin extends CI_Controller
             if ($this->input->post('section_id') != '') {
                 $data2['section_id'] = $this->input->post('section_id');
             }
-            $data2['roll'] = $this->input->post('roll');
+            $data2['roll'] = "ADM-" . $this->input->post('admNo') . "/" . $running_year;
             $data2['date_added'] = strtotime(date("Y-m-d H:i:s"));
             $data2['year'] = $running_year;
             $this->db->insert('enroll', $data2);

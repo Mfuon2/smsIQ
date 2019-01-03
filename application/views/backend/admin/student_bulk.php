@@ -46,8 +46,13 @@
 
 		<div class="form-group">
 			<input type="text" name="roll[]" id="roll" class="form-control" style="width: 80px; margin-left: 5px;"
-				placeholder="<?php echo get_phrase('Roll');?>">
+				placeholder="<?php echo get_phrase('Enrolment Number');?>">
 		</div>
+
+        <div class="form-group">
+            <input type="text" name="admNo[]" id="roll" class="form-control" style="width: 80px; margin-left: 5px;"
+                   placeholder="<?php echo get_phrase('Admission Number');?>">
+        </div>
 
 		<div class="form-group">
 			<input type="text" name="username[]" id="username" class="form-control" style="width: 160px; margin-left: 5px;"

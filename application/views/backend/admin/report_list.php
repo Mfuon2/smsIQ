@@ -157,7 +157,7 @@
   });
     });
   </script>         </div>
-            <footer class="footer text-center"> @Mzalendo </footer>       </div>
+            <footer class="footer text-center"> Copyright Reserved &copy Mzalendo </footer>       </div>
     </div>
         <script type="text/javascript">
     function showAjaxModal(url)

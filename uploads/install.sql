@@ -610,7 +610,7 @@ INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`
 (622, 'Classes', 'Classes', 'Grados', 'graus', 'ग्रेड', 'grades', 'оцене', 'الدرجات'),
 (623, 'New', 'New', 'Nuevo', 'novo', 'नई', 'nouveau', 'нови', 'جديد'),
 (624, 'Salons', 'Salons', 'Salones', 'salons', 'सैलून', 'Salons', 'салони', 'صالونات'),
-(625, 'Salon', 'Salon', 'Salón', 'salão', 'सैलून', 'salon', 'салон', 'صالون'),
+(625, 'Class Room', 'Salon', 'Salón', 'salão', 'सैलून', 'salon', 'салон', 'صالون'),
 (626, 'Write-Comment', 'Write your comment here', 'Escribe tu comentario aquí', 'Escreva o seu comentário aqui', 'अपनी टिप्पणी यहाँ लिखें', 'Écrivez votre commentaire ici', 'Напишите ваш коментар овде', 'اكتب تعليقك هنا'),
 (627, 'Send', 'Send', 'Enviar', 'enviar', 'भेजना', 'envoyer', 'послати', 'إرسال'),
 (628, 'Teacher', 'Teacher', 'Profesor', 'mestre', 'प्रोफ़ेसर', 'professeur', 'мајстор', 'أستاذ'),

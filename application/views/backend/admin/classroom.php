@@ -1,11 +1,11 @@
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title"><?php echo get_phrase('Salons');?></h4>
+        <h4 class="page-title"><?php echo get_phrase('Class Room');?></h4>
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
   		    <li><a href="<?php echo base_url(); ?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard');?></a></li>
-            <li><a class="active"><?php echo get_phrase('Salons');?></a></li>
+            <li><a class="active"><?php echo get_phrase('Class Room');?></a></li>
         </ol>
     </div>
 </div>
@@ -15,7 +15,7 @@
         <ul class="nav nav-tabs bordered">
 			<li class="active">
             	<a href="#list" data-toggle="tab">
-					<?php echo get_phrase('Salons');?>
+					<?php echo get_phrase('Class Room');?>
                 </a>
             </li>
 			<li><a href="#add" data-toggle="tab">
@@ -32,7 +32,7 @@
               <thead>
                 <tr>
                    <th style="text-align: center;"><?php echo "#";?></th>
-                   <th style="text-align: center;"><?php echo get_phrase('Salon');?></th>
+                   <th style="text-align: center;"><?php echo get_phrase('Class Room');?></th>
                    <th style="text-align: center;"><?php echo get_phrase('Description');?></th>
                    <th style="text-align: center;"><?php echo get_phrase('Options');?></th>
                 </tr>
@@ -63,9 +63,9 @@
 				<div class="padded">
 		     
 		     		 <div class="form-group">
-                    <label class="col-sm-4 control-label"><?php echo get_phrase('Salon');?></label>
+                    <label class="col-sm-4 control-label"><?php echo get_phrase('Class Room');?></label>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" required="" name="name" placeholder="<?php echo get_phrase('Salon');?>">
+                      <input type="text" class="form-control" required="" name="name" placeholder="<?php echo get_phrase('Class Room');?>">
                   </div>
                   </div>
 

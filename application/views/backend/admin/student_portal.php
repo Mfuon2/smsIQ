@@ -155,7 +155,7 @@ foreach ($edit_data as $row3):
                                     </div>
 
                                      <div class="form-group">
-                                        <label class="col-sm-12"><?php echo get_phrase('Salon');?></label>
+                                        <label class="col-sm-12"><?php echo get_phrase('Class Room');?></label>
                                         <div class="col-sm-12">
                                             <select class="form-control" name="dormitory_id">
                                                 <option><?php echo get_phrase('Select'); ?></option>

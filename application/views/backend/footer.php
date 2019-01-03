@@ -1,2 +1,1 @@
-<footer class="footer text-center"> @Mzalendo  <img src="../../../style/images/ke.png"/>
-</footer>
+<footer class="footer text-center"> Copyright Reserved &copy Mzalendo </footer>

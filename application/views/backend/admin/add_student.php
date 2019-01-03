@@ -125,6 +125,13 @@
 						</div>
 					</div>
 
+                <div class="form-group">
+                    <label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Admission Number'); ?></label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="admNo" value="" >
+                    </div>
+                </div>
+
 					<div class="form-group">
 						<label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Username'); ?></label>
 						<div class="col-sm-5">
@@ -178,7 +185,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Roll'); ?></label>
+						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Enrolment Number'); ?></label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" name="roll" value="" >
 						</div> 
