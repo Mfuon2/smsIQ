@@ -13,6 +13,13 @@ Requirements
     Protocol version: 10
     Server charset: UTF-8 Unicode (utf8)
     
+Authors
+=================
+    Name:   Mfuon Leonard
+    Title:  Lead Developer
+    email:  mfolee@gmail.com
+    twitter:@mfuon
+    skype:  mfuon.lenny 
     
 License (Dist)
 =================
