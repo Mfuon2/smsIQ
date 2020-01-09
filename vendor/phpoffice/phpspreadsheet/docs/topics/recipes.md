@@ -132,7 +132,7 @@ will take care of displaying the formula according the applications
 language. Translation is taken care of by the application!
 
 The following line of code writes the formula
-`=IF(C4&gt;500,"profit","loss")` into the cell B8. Note that the
+`=IF(C4>500,"profit","loss")` into the cell B8. Note that the
 formula must start with `=` to make PhpSpreadsheet recognise this as a
 formula.
 
@@ -985,7 +985,7 @@ $validation->setFormula2(20);
 ```
 
 The following piece of code only allows an item picked from a list of
-data to be entered in cell B3:
+data to be entered in cell B5:
 
 ``` php
 $validation = $spreadsheet->getActiveSheet()->getCell('B5')

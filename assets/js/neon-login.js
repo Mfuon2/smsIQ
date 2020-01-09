@@ -69,15 +69,16 @@ var neonLogin = neonLogin || {};
 							email: $("input#user").val(),
 							password: $("input#password").val()
 						},
-						error: function()
+						error: function(errors)
 						{
-							alert("Check Configuration Files");
+							console.log("fgailed" + errors);
+							alert("Check Configuration Files " + errors.toString());
 						},
 						success: function(response)
 						{
 							// Login status [success|invalid]
 							var login_status = response.login_status;
-															
+                            console.log("success " + JSON.stringify(login_status));
 							// Form is fully completed, we update the percentage
 							neonLogin.setPercentage(100);
 							
@@ -90,10 +91,10 @@ var neonLogin = neonLogin || {};
 								{
 									$(".login-page").removeClass('logging-in');
 									neonLogin.resetProgressBar(true);
-								}
-								else
-								if(login_status === 'success')
+                                    alert("Login Failed " + response.toString());
+								}else if(login_status === 'success')
 								{
+                                    alert("Logged in " + baseurl);
 									// Redirect to login page
 									setTimeout(function()
 									{
